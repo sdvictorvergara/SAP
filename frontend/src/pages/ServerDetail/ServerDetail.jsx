@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import Field from '../../components/Field/Field.jsx'
 import { ConfirmModal } from '../../components/Modal/Modal.jsx'
+import { useToast } from '../../components/Toast/Toast.jsx'
 import './ServerDetail.css'
 
 const EMPTY = {
@@ -22,11 +23,12 @@ export default function ServerDetail(props) {
 function ServerForm({ id, servers, setServers }) {
   const isNew = id === 'new'
   const navigate = useNavigate()
+  const toast = useToast()
   const [params] = useSearchParams()
   const server = isNew ? EMPTY : servers.find((s) => s.id === id)
 
   const [editing, setEditing] = useState(isNew || params.get('edit') === '1')
-  const [draft, setDraft] = useState(server)
+  const [draft, setDraft] = useState(server) // borrador
   const [confirmDiscard, setConfirmDiscard] = useState(false)
 
   if (!server) return <Navigate to="/servers" replace />
@@ -40,9 +42,11 @@ function ServerForm({ id, servers, setServers }) {
       const newId = `srv-${Date.now()}`
       setServers((list) => [...list, { ...draft, id: newId, status: 'offline' }])
       navigate(`/servers/${newId}`, { replace: true })
+      toast('Servidor añadido')
     } else {
       setServers((list) => list.map((s) => (s.id === id ? draft : s)))
       setEditing(false)
+      toast('Cambios guardados')
     }
   }
 

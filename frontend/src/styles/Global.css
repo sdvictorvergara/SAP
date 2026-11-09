@@ -13,6 +13,7 @@
     --Text_Strong: #F2F5F7;
     --Line: rgba(177, 188, 194, 0.35);
     --Page_Outer: #141B22;
+    color-scheme: dark;
 }
 
 *,
@@ -75,4 +76,43 @@ img {
 :focus-visible {
     outline: 2px solid var(--Role_Cards);
     outline-offset: 2px;
+}
+
+.page h1 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--Text_Strong);
+}
+
+.page p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+    .app-shell {
+        max-width: 1100px;
+    }
+
+    .page {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        align-items: start;
+        padding: 28px 28px 40px;
+    }
+
+    .page > h1,
+    .page > .detail__title,
+    .page > .status-summary,
+    .page > .fab {
+        grid-column: 1 / -1;
+    }
+
+    .page > .fab {
+        justify-self: end;
+    }
+
+    .header__search {
+        max-width: 420px;
+    }
 }

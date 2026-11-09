@@ -1,20 +1,27 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ConfirmModal } from '../Modal/Modal.jsx'
+import { useToast } from '../Toast/Toast.jsx'
 import './ServerCard.css'
 
 export default function ServerCard({ server, setServers }) {
   const navigate = useNavigate()
+  const toast = useToast()
   const [menuOpen, setMenuOpen] = useState(false)
   const [confirm, setConfirm] = useState(null)
   const online = server.status === 'online'
 
-  const setStatus = (status) =>
+  const setStatus = (status) => {
     setServers((list) => list.map((s) => (s.id === server.id ? { ...s, status } : s)))
+    toast(status === 'online' ? 'Servidor encendido' : 'Servidor apagado')
+  }
 
   const handleConfirm = () => {
     if (confirm === 'shutdown') setStatus('offline')
-    else setServers((list) => list.filter((s) => s.id !== server.id))
+    else {
+      setServers((list) => list.filter((s) => s.id !== server.id))
+      toast('Servidor eliminado')
+    }
     setConfirm(null)
   }
 
@@ -64,9 +71,8 @@ export default function ServerCard({ server, setServers }) {
                 onClick={() => {
                   setMenuOpen(false)
                   setConfirm('delete')
-                }}
-              >
-                <i className="bi bi-trash3" /> Eliminar
+                }}>
+                  <i className="bi bi-trash3" /> Eliminar
               </button>
             </li>
           </ul>

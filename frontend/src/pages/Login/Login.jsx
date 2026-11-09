@@ -3,7 +3,7 @@ import loginLogo from '../../assets/login-logo.png'
 import SocialFooter from '../../components/SocialFooter/SocialFooter.jsx'
 import './Login.css'
 
-// Login solo visual por ahora en lo que se integra una base de datos para almacenar bien los datos.
+// Login sin comprobación por ahora: entra directo en lo que se integra un back.
 export default function Login() {
   const navigate = useNavigate()
 

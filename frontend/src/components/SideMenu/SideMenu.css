@@ -110,3 +110,14 @@
     align-items: flex-start;
     padding: 12px 6px 24px;
 }
+
+@media (min-width: 768px) {
+    .side-menu {
+        justify-content: flex-start;
+        background: rgba(10, 15, 20, 0.6);
+    }
+
+    .side-menu__panel {
+        max-width: 320px;
+    }
+}

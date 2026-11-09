@@ -8,12 +8,13 @@ const LINKS = [
   { to: '/', label: 'Home', icon: 'bi-house', end: true },
   { to: '/servers', label: 'Servers', icon: 'bi-hdd' },
   { to: '/services', label: 'Services', icon: 'bi-archive' },
+  { to: '/help', label: 'Help', icon: 'bi-question-circle' },
 ]
 
 export default function SideMenu({ open, onClose, servers }) {
   return (
-    <aside className={`side-menu ${open ? 'side-menu--open' : ''}`} aria-hidden={!open}>
-      <div className="side-menu__panel">
+    <aside className={`side-menu ${open ? 'side-menu--open' : ''}`} aria-hidden={!open} onClick={onClose}>
+      <div className="side-menu__panel" onClick={(e) => e.stopPropagation()}>
         <button className="side-menu__close" onClick={onClose} aria-label="Cerrar menú">
           <i className="bi bi-list" />
         </button>
