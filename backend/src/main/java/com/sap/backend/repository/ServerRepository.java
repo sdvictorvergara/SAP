@@ -20,4 +20,16 @@ public class ServerRepository {
     public Optional<Server> findById(Integer id) {
         return Optional.ofNullable(em.find(Server.class, id));
     }
+
+    public Server save(Server server) {
+        if (server.getId() == null) {
+            em.persist(server);
+            return server;
+        }
+        return em.merge(server);
+    }
+
+    public void delete(Server server) {
+        em.remove(server);
+    }
 }

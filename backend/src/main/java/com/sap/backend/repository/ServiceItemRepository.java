@@ -25,4 +25,11 @@ public class ServiceItemRepository {
                 .setParameter("serverId", serverId)
                 .getResultList();
     }
+
+//  SI SE BORRA UN SERVIDOR BORRA LOS SERVICIOS QUE LE PERTENECEN
+    public void deleteByServerId(Integer serverId) {
+        em.createQuery("delete from ServiceItem s where s.server.id = :serverId")
+                .setParameter("serverId", serverId)
+                .executeUpdate();
+    }
 }

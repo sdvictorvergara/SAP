@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { API } from "./api.js";
 import Header from "./components/Header/Header.jsx";
 import SideMenu from "./components/SideMenu/SideMenu.jsx";
@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound/NotFound.jsx";
 function Layout({ servers, services }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  if (!localStorage.getItem("user")) return <Navigate to="/login" replace />;
+
   return (
     <>
       <Header onMenu={() => setMenuOpen(true)} />
@@ -24,7 +26,6 @@ function Layout({ servers, services }) {
   );
 }
 
-// Servidores y servicios se leen del backend. Los cambios (editar, añadir, eliminar, encender/apagar) por ahora solo viven en memoria
 function App() {
   const [servers, setServers] = useState([]);
   const [services, setServices] = useState([]);

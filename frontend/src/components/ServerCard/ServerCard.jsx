@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ConfirmModal } from '../Modal/Modal.jsx'
 import { useToast } from '../Toast/Toast.jsx'
+import { deleteServer, setServerStatus } from '../../api.js'
 import './ServerCard.css'
 
 export default function ServerCard({ server, setServers }) {
@@ -11,16 +12,26 @@ export default function ServerCard({ server, setServers }) {
   const [confirm, setConfirm] = useState(null)
   const online = server.status === 'online'
 
-  const setStatus = (status) => {
-    setServers((list) => list.map((s) => (s.id === server.id ? { ...s, status } : s)))
-    toast(status === 'online' ? 'Servidor encendido' : 'Servidor apagado')
+  const setStatus = async (status) => {
+    try {
+      const updated = await setServerStatus(server.id, status)
+      setServers((list) => list.map((s) => (s.id === server.id ? updated : s)))
+      toast(status === 'online' ? 'Servidor encendido' : 'Servidor apagado')
+    } catch (err) {
+      toast(err.message)
+    }
   }
 
-  const handleConfirm = () => {
-    if (confirm === 'shutdown') setStatus('offline')
+  const handleConfirm = async () => {
+    if (confirm === 'shutdown') await setStatus('offline')
     else {
-      setServers((list) => list.filter((s) => s.id !== server.id))
-      toast('Servidor eliminado')
+      try {
+        await deleteServer(server.id)
+        setServers((list) => list.filter((s) => s.id !== server.id))
+        toast('Servidor eliminado')
+      } catch (err) {
+        toast(err.message)
+      }
     }
     setConfirm(null)
   }

@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-
 import Field from '../../components/Field/Field.jsx'
 import { ConfirmModal } from '../../components/Modal/Modal.jsx'
 import { useToast } from '../../components/Toast/Toast.jsx'
+import { createServer, updateServer } from '../../api.js'
 import './ServerDetail.css'
 
 const EMPTY = {
@@ -36,17 +37,25 @@ function ServerForm({ id, servers, setServers }) {
   const data = editing ? draft : server
   const handleChange = (name, value) => setDraft((d) => ({ ...d, [name]: value }))
 
-  const handleSave = () => {
-    if (!draft.name.trim()) return
-    if (isNew) {
-      const newId = `srv-${Date.now()}`
-      setServers((list) => [...list, { ...draft, id: newId, status: 'offline' }])
-      navigate(`/servers/${newId}`, { replace: true })
-      toast('Servidor añadido')
-    } else {
-      setServers((list) => list.map((s) => (s.id === id ? draft : s)))
-      setEditing(false)
-      toast('Cambios guardados')
+  const handleSave = async () => {
+    if (!draft.name.trim() || !draft.mac.trim()) {
+      toast('El nombre y la MAC son obligatorios')
+      return
+    }
+    try {
+      if (isNew) {
+        const created = await createServer(draft)
+        setServers((list) => [...list, created])
+        navigate(`/servers/${created.id}`, { replace: true })
+        toast('Servidor añadido')
+      } else {
+        const updated = await updateServer(id, draft)
+        setServers((list) => list.map((s) => (s.id === id ? updated : s)))
+        setEditing(false)
+        toast('Cambios guardados')
+      }
+    } catch (err) {
+      toast(err.message)
     }
   }
 

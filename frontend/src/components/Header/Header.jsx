@@ -13,7 +13,7 @@ export default function Header({ onMenu }) {
       <input type="search" placeholder="Search" className="header__search" aria-label="Buscar" />
 
       {/* Log Out */}
-      <Link to="/login" aria-label="Cerrar sesión" title="Cerrar sesión">
+      <Link to="/login" onClick={() => localStorage.removeItem("user")} aria-label="Cerrar sesión" title="Cerrar sesión">
         <img src={userIcon} alt="" className="header__account" />
       </Link>
     </header>
