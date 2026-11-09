@@ -1,0 +1,118 @@
+:root {
+    --Background: #1C2630;
+    --Modal_Background: #313D49;
+    --Cards_Background: #485567;
+    --Text_Icons: #B1BCC2;
+    --Role_Cards: #5471C9;
+    --Buttons: #0051FF;
+    --Online_Mode: #3BFF00;
+    --Start_Button: #37C078;
+    --Offline_Mode: #FF0000;
+    --Stop_Button: #DC4E3C;
+
+    --Text_Strong: #F2F5F7;
+    --Line: rgba(177, 188, 194, 0.35);
+    --Page_Outer: #141B22;
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--Page_Outer);
+}
+
+body {
+    background-color: var(--Background);
+    color: var(--Text_Icons);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+}
+
+.app-shell {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    min-height: 100dvh;
+    margin: 0 auto;
+    background-color: var(--Background);
+    box-shadow: 0 0 0 1px rgba(177, 188, 194, 0.08);
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 18px 32px;
+}
+
+:focus-visible {
+    outline: 2px solid var(--Role_Cards);
+    outline-offset: 2px;
+}
+
+.page h1 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--Text_Strong);
+}
+
+.page p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+    .app-shell {
+        max-width: 1100px;
+    }
+
+    .page {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        align-items: start;
+        padding: 28px 28px 40px;
+    }
+
+    .page > h1,
+    .page > .detail__title,
+    .page > .status-summary,
+    .page > .fab {
+        grid-column: 1 / -1;
+    }
+
+    .page > .fab {
+        justify-self: end;
+    }
+
+    .header__search {
+        max-width: 420px;
+    }
+}
