@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Modal } from '../Modal/Modal.jsx'
 import StatusDot from '../StatusDot/StatusDot.jsx'
-import services from '../../data/services.json'
 import './ServiceGroup.css'
 
 // Borde card para marcar los servicios y servidor que toca
-export default function ServiceGroups({ servers }) {
+export default function ServiceGroups({ servers, services }) {
   return servers.map((server) => {
     const items = services.filter((s) => s.serverId === server.id)
     return items.length > 0 ? <ServiceGroup key={server.id} server={server} items={items} /> : null

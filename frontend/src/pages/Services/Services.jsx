@@ -1,9 +1,9 @@
 import ServiceGroups from '../../components/ServiceGroup/ServiceGroup.jsx'
 
-export default function Services({ servers }) {
+export default function Services({ servers, services }) {
   return (
     <main className="page">
-      <ServiceGroups servers={servers} />
+      <ServiceGroups servers={servers} services={services} />
     </main>
   )
 }

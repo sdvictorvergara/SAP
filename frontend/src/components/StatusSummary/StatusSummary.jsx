@@ -1,8 +1,7 @@
 import StatusDot from '../StatusDot/StatusDot.jsx'
-import services from '../../data/services.json'
 import './StatusSummary.css'
 
-export default function StatusSummary({ servers }) {
+export default function StatusSummary({ servers, services }) {
   const all = [...servers, ...services]
   const online = all.filter((i) => i.status === 'online').length
 

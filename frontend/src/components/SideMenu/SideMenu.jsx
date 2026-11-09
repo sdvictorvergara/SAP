@@ -11,7 +11,10 @@ const LINKS = [
   { to: '/help', label: 'Help', icon: 'bi-question-circle' },
 ]
 
-export default function SideMenu({ open, onClose, servers }) {
+export default function SideMenu({ open, onClose, servers, services }) {
+  // Usuario guardado al hacer login
+  const user = JSON.parse(localStorage.getItem('user')) || {}
+
   return (
     <aside className={`side-menu ${open ? 'side-menu--open' : ''}`} aria-hidden={!open} onClick={onClose}>
       <div className="side-menu__panel" onClick={(e) => e.stopPropagation()}>
@@ -22,9 +25,9 @@ export default function SideMenu({ open, onClose, servers }) {
         <div className="side-menu__user">
           <img src={userIcon} alt="" />
           <div>
-            <p className="side-menu__name">Usuario</p>
-            <p className="side-menu__email">example@domain.es</p>
-            <span className="side-menu__role">Admin</span>
+            <p className="side-menu__name">{user.name}</p>
+            <p className="side-menu__email">{user.email}</p>
+            <span className="side-menu__role">{user.role}</span>
           </div>
         </div>
 
@@ -40,7 +43,7 @@ export default function SideMenu({ open, onClose, servers }) {
 
         <div className="side-menu__bottom">
           <hr />
-          <StatusSummary servers={servers} />
+          <StatusSummary servers={servers} services={services} />
         </div>
 
         <SocialFooter />
