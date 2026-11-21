@@ -16,6 +16,18 @@
     color-scheme: dark;
 }
 
+/* Modo claro_______________________________________ */
+:root[data-theme="light"] {
+    --Background: #F2F5F7;
+    --Modal_Background: #FFFFFF;
+    --Cards_Background: #DDE3E8;
+    --Text_Icons: #3A4650;
+    --Text_Strong: #111A22;
+    --Line: rgba(0, 0, 0, 0.25);
+    --Page_Outer: #E3E8EC;
+    color-scheme: light;
+}
+
 *,
 *::before,
 *::after {

@@ -19,6 +19,12 @@
     color: var(--Text_Icons);
 }
 
+.header__theme {
+    flex: none;
+    font-size: 22px;
+    color: var(--Text_Icons);
+}
+
 .header__search {
     flex: 1;
     min-width: 0;
