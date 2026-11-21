@@ -31,6 +31,7 @@ function ServerForm({ id, servers, setServers }) {
   const [editing, setEditing] = useState(isNew || params.get('edit') === '1')
   const [draft, setDraft] = useState(server) // borrador
   const [confirmDiscard, setConfirmDiscard] = useState(false)
+  const [error, setError] = useState('')
 
   if (!server) return <Navigate to="/servers" replace />
 
@@ -38,10 +39,11 @@ function ServerForm({ id, servers, setServers }) {
   const handleChange = (name, value) => setDraft((d) => ({ ...d, [name]: value }))
 
   const handleSave = async () => {
-    if (!draft.name.trim() || !draft.mac.trim()) {
-      toast('El nombre y la MAC son obligatorios')
-      return
+    if (!draft.name.trim() || !draft.mac.trim()) return setError('El nombre y la MAC son obligatorios.')
+    if (draft.ipv4.trim() && !/^(\d{1,3}\.){3}\d{1,3}$/.test(draft.ipv4.trim())) {
+      return setError('La IPv4 no tiene un formato válido. Ejemplo: 192.168.1.10')
     }
+    setError('')
     try {
       if (isNew) {
         const created = await createServer(draft)
@@ -55,13 +57,14 @@ function ServerForm({ id, servers, setServers }) {
         toast('Cambios guardados')
       }
     } catch (err) {
-      toast(err.message)
+      toast(err.message, 'error')
     }
   }
 
   const handleDiscard = () => {
     if (isNew) return navigate('/servers', { replace: true })
     setDraft(server)
+    setError('')
     setEditing(false)
     setConfirmDiscard(false)
   }
@@ -105,6 +108,8 @@ function ServerForm({ id, servers, setServers }) {
           )}
         </div>
       </div>
+
+      {editing && error && <p className="detail__error" role="alert">{error}</p>}
 
       <section className="detail__box">
         <h2>Network</h2>

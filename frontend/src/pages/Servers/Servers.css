@@ -26,3 +26,43 @@
 .fab:hover {
     filter: brightness(1.12);
 }
+
+.servers-top {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.servers-error {
+    color: var(--Stop_Button);
+}
+
+.btn {
+    padding: 8px 16px;
+    border: 1px solid var(--Line);
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+@media (min-width: 768px) {
+    .servers-page {
+        min-height: 0;
+        align-content: start;
+    }
+}
+
+.servers-info {
+    grid-column: 1 / -1;
+}
+
+.servers-error {
+    color: var(--Stop_Button);
+}
+
+.btn {
+    padding: 6px 14px;
+    border: 1px solid var(--Line);
+    border-radius: 6px;
+    font-size: 13px;
+}

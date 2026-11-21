@@ -18,7 +18,7 @@ export default function ServerCard({ server, setServers }) {
       setServers((list) => list.map((s) => (s.id === server.id ? updated : s)))
       toast(status === 'online' ? 'Servidor encendido' : 'Servidor apagado')
     } catch (err) {
-      toast(err.message)
+      toast(err.message, 'error')
     }
   }
 
@@ -30,7 +30,7 @@ export default function ServerCard({ server, setServers }) {
         setServers((list) => list.filter((s) => s.id !== server.id))
         toast('Servidor eliminado')
       } catch (err) {
-        toast(err.message)
+        toast(err.message, 'error')
       }
     }
     setConfirm(null)

@@ -83,3 +83,8 @@
 .login__forgot:hover {
     text-decoration: underline;
 }
+
+.login__error {
+    font-size: 12px;
+    color: var(--Stop_Button);
+}
