@@ -29,12 +29,20 @@ function Layout({ servers, services }) {
 function App() {
   const [servers, setServers] = useState([]);
   const [services, setServices] = useState([]);
+  const [status, setStatus] = useState("loading"); // loading | ok | error
   const shared = { servers, setServers, services };
 
-  useEffect(() => {
-    fetch(`${API}/api/servers`).then((res) => res.json()).then(setServers);
-    fetch(`${API}/api/services`).then((res) => res.json()).then(setServices);
-  }, []);
+  const get = (path) => fetch(`${API}${path}`).then((res) => (res.ok ? res.json() : Promise.reject()));
+
+  // Carga los datos del backend; si falla se avisa y se puede reintentar
+  const load = () => {
+    setStatus("loading");
+    Promise.all([get("/api/servers"), get("/api/services")])
+      .then(([s, sv]) => { setServers(s); setServices(sv); setStatus("ok"); })
+      .catch(() => setStatus("error"));
+  };
+
+  useEffect(load, []);
 
   return (
     <div className="app-shell">
@@ -42,7 +50,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route element={<Layout servers={servers} services={services} />}>
           <Route index element={<Home {...shared} />} />
-          <Route path="servers" element={<Servers {...shared} />} />
+          <Route path="servers" element={<Servers {...shared} status={status} reload={load} />} />
           <Route path="servers/:id" element={<ServerDetail {...shared} />} />
           <Route path="services" element={<Services servers={servers} services={services} />} />
           <Route path="help" element={<Help />} />

@@ -84,3 +84,7 @@
     border: none;
     border-top: 1px solid var(--Line);
 }
+
+.detail__error {
+    color: var(--Stop_Button);
+}

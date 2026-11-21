@@ -51,3 +51,18 @@
         align-content: start;
     }
 }
+
+.servers-info {
+    grid-column: 1 / -1;
+}
+
+.servers-error {
+    color: var(--Stop_Button);
+}
+
+.btn {
+    padding: 6px 14px;
+    border: 1px solid var(--Line);
+    border-radius: 6px;
+    font-size: 13px;
+}

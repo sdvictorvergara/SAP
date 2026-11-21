@@ -4,21 +4,24 @@ import './Toast.css'
 const ToastContext = createContext(() => {})
 export const useToast = () => useContext(ToastContext)
 
-// Modal de alerta con duracion de 3segundos
 export function ToastProvider({ children }) {
-  const [text, setText] = useState('')
+  const [toastData, setToastData] = useState(null)
   const timer = useRef()
 
-  const toast = (message) => {
+  const toast = (message, type = 'ok') => {
     clearTimeout(timer.current)
-    setText(message)
-    timer.current = setTimeout(() => setText(''), 3000)
+    setToastData({ message, type })
+    timer.current = setTimeout(() => setToastData(null), 3000)
   }
 
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      {text && <div className="toast" role="status"><i className="bi bi-check-circle" aria-hidden="true" /> {text}</div>}
+      {toastData && (
+        <div className={`toast toast--${toastData.type}`} role={toastData.type === 'error' ? 'alert' : 'status'}>
+          <i className={`bi ${toastData.type === 'error' ? 'bi-exclamation-circle' : 'bi-check-circle'}`} aria-hidden="true" /> {toastData.message}
+        </div>
+      )}
     </ToastContext.Provider>
   )
 }
