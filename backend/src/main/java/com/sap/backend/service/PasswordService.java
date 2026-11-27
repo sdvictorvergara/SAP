@@ -42,7 +42,7 @@ public class PasswordService {
             byte[] salt = Base64.getDecoder().decode(parts[2]);
             byte[] expected = Base64.getDecoder().decode(parts[3]);
             byte[] actual = pbkdf2(rawPassword, salt, iterations);
-            return MessageDigest.isEqual(expected, actual); // comparación en tiempo constante
+            return MessageDigest.isEqual(expected, actual);
         } catch (IllegalArgumentException ex) {
             return false;
         }

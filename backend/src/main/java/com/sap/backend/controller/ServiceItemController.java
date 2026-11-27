@@ -18,7 +18,6 @@ public class ServiceItemController {
         this.services = services;
     }
 
-    /** GET /api/services   o   GET /api/services?serverId=1 */
     @GetMapping
     public List<ServiceItemResponse> list(@RequestParam(required = false) Integer serverId) {
         return (serverId == null ? services.findAll() : services.findByServerId(serverId))
